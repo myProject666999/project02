@@ -32,6 +32,7 @@ target
 *.rar
 *.iml
 .idea
+*.bat
 
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
@@ -87,6 +88,6 @@ Thumbs.db
 # Git
 *.log
 package-lock.json
-
+init-repo.bat
 
 
