@@ -88,6 +88,6 @@ Thumbs.db
 # Git
 *.log
 package-lock.json
-init-repo.bat
+init-*.bat
 
 
