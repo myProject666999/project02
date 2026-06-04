@@ -3,7 +3,7 @@
     <header class="app-header">
       <div class="header-content">
         <h1 class="retro-title header-title">
-          <el-icon class="header-icon"><VintageCar /></el-icon>
+          <el-icon class="header-icon"><Van /></el-icon>
           复古汽车修复进度跟踪
         </h1>
         <p class="header-subtitle">记录每一辆经典车的重生之旅</p>

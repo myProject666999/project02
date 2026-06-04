@@ -11,7 +11,7 @@
       </el-button>
       <div v-loading="carStore.loading" class="car-header-info">
         <div class="car-icon-wrapper">
-          <el-icon class="car-icon"><VintageCar /></el-icon>
+          <el-icon class="car-icon"><Van /></el-icon>
         </div>
         <div class="car-main-info">
           <h2 class="retro-title car-name">{{ currentCar?.name }}</h2>
@@ -182,7 +182,7 @@
 import { ref, reactive, computed, onMounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { ElMessage, type FormInstance, type FormRules } from 'element-plus'
-import { ArrowLeft, VintageCar, Tools, SetUp, Notebook, Document, Plus, Collection, Operation } from '@element-plus/icons-vue'
+import { ArrowLeft, Van, Tools, SetUp, Notebook, Document, Plus, Collection, Operation } from '@element-plus/icons-vue'
 import { useCarStore, useProcessStore, usePartStore, useRepairLogStore } from '@/stores'
 import { partsApi, repairLogsApi, processesApi, subTasksApi } from '@/api'
 import { RestorationRouteText, ProcessStatus, type Process, type SubTask, type RepairLog } from '@/types'
@@ -248,10 +248,8 @@ function getRouteText(route?: string) {
 
 function getRouteTagType(route?: string) {
   switch (route) {
-    case 'full_restoration': return 'warning'
-    case 'partial_restoration': return 'info'
+    case 'restoration': return 'warning'
     case 'modification': return 'success'
-    case 'maintenance': return 'info'
     default: return 'info'
   }
 }

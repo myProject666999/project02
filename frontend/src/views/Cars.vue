@@ -2,7 +2,7 @@
   <div class="cars-page">
     <div class="page-header">
       <h2 class="retro-title page-title">
-        <el-icon class="title-icon"><Garage /></el-icon>
+        <el-icon class="title-icon"><House /></el-icon>
         修复车辆列表
       </h2>
       <p class="page-subtitle">选择一辆车查看详细修复进度</p>
@@ -29,7 +29,7 @@
           >
             <div class="card-image">
               <div class="image-placeholder">
-                <el-icon class="car-icon"><VintageCar /></el-icon>
+                <el-icon class="car-icon"><Van /></el-icon>
               </div>
               <div class="card-overlay">
                 <span class="click-hint">
@@ -128,20 +128,16 @@ function getRouteText(route: string) {
 
 function getRouteTagType(route: string) {
   switch (route) {
-    case 'full_restoration': return 'warning'
-    case 'partial_restoration': return 'info'
+    case 'restoration': return 'warning'
     case 'modification': return 'success'
-    case 'maintenance': return 'info'
     default: return 'info'
   }
 }
 
 function getProgress(car: Car): number {
-  if (!car.processes && car.processes.length === 0) return 0
-  const processes = car.processes || []
-  if (processes.length === 0) return 0
-  const completed = processes.filter(p => p.status === 'completed').length
-  return Math.round((completed / processes.length) * 100)
+  if (!car.processes || car.processes.length === 0) return 0
+  const completed = car.processes.filter(p => p.status === 'completed').length
+  return Math.round((completed / car.processes.length) * 100)
 }
 
 function getProgressColor(percent: number) {
