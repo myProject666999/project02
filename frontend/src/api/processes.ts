@@ -31,19 +31,11 @@ export const processesApi = {
   },
 
   update(id: number, data: UpdateProcessDto): Promise<Process> {
-    return request.put<Process>(`/processes/${id}`, data)
+    return request.patch<Process>(`/processes/${id}`, data)
   },
 
   remove(id: number): Promise<void> {
     return request.delete<void>(`/processes/${id}`)
-  },
-
-  initializeProcesses(carId: number): Promise<Process[]> {
-    return request.post<Process[]>(`/processes/initialize/${carId}`)
-  },
-
-  updateStatus(id: number, status: string): Promise<Process> {
-    return request.patch<Process>(`/processes/${id}/status`, { status })
   }
 }
 

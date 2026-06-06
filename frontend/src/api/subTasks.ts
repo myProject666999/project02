@@ -29,15 +29,11 @@ export const subTasksApi = {
   },
 
   update(id: number, data: UpdateSubTaskDto): Promise<SubTask> {
-    return request.put<SubTask>(`/sub-tasks/${id}`, data)
+    return request.patch<SubTask>(`/sub-tasks/${id}`, data)
   },
 
   remove(id: number): Promise<void> {
     return request.delete<void>(`/sub-tasks/${id}`)
-  },
-
-  updateStatus(id: number, status: string): Promise<SubTask> {
-    return request.patch<SubTask>(`/sub-tasks/${id}/status`, { status })
   }
 }
 

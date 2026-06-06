@@ -41,7 +41,7 @@
               :stroke-width="10"
               :show-text="true"
               :color="getProgressColor(overallProgress)"
-              format="(percentage)%"
+              :format="formatProgress"
             />
           </div>
           <div class="progress-label">总体修复进度</div>
@@ -261,6 +261,10 @@ function getProgressColor(percent: number) {
   return '#8b5a2b'
 }
 
+function formatProgress(percentage: number) {
+  return `${percentage}%`
+}
+
 async function handleProcessStatusChange(process: Process, newStatus: ProcessStatus) {
   try {
     const updateData: any = { status: newStatus }
@@ -280,7 +284,7 @@ async function handleProcessStatusChange(process: Process, newStatus: ProcessSta
 
 async function handleSubTaskStatusChange(_process: Process, subTask: SubTask, newStatus: ProcessStatus) {
   try {
-    await subTasksApi.updateStatus(subTask.id, newStatus)
+    await subTasksApi.update(subTask.id, { status: newStatus })
     await processStore.fetchProcessesByCarId(carId.value)
     ElMessage.success('子任务状态已更新')
   } catch (error) {
@@ -320,7 +324,7 @@ async function handleDeletePart(id: number) {
 
 async function handlePartStatusChange(id: number, status: string) {
   try {
-    await partsApi.updateStatus(id, status)
+    await partsApi.update(id, { status })
     await partStore.fetchPartsByCarId(carId.value)
     ElMessage.success('零件状态已更新')
   } catch (error) {

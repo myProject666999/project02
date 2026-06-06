@@ -32,7 +32,7 @@ export const carsApi = {
   },
 
   update(id: number, data: UpdateCarDto): Promise<Car> {
-    return request.put<Car>(`/cars/${id}`, data)
+    return request.patch<Car>(`/cars/${id}`, data)
   },
 
   remove(id: number): Promise<void> {

@@ -31,15 +31,11 @@ export const partsApi = {
   },
 
   update(id: number, data: UpdatePartDto): Promise<Part> {
-    return request.put<Part>(`/parts/${id}`, data)
+    return request.patch<Part>(`/parts/${id}`, data)
   },
 
   remove(id: number): Promise<void> {
     return request.delete<void>(`/parts/${id}`)
-  },
-
-  updateStatus(id: number, status: string): Promise<Part> {
-    return request.patch<Part>(`/parts/${id}/status`, { status })
   }
 }
 
