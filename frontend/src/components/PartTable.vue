@@ -9,7 +9,7 @@
           </div>
           <div class="stat-item">
             <span class="stat-label">采购总额</span>
-            <span class="stat-value stat-highlight">¥{{ totalCost.toFixed(2) }}</span>
+            <span class="stat-value stat-highlight">¥{{ formatPrice(totalCost) }}</span>
           </div>
         </div>
         <el-button type="primary" @click="handleAdd">
@@ -38,13 +38,13 @@
         <el-table-column prop="source" label="采购渠道" min-width="120" />
         <el-table-column label="单价" min-width="100">
           <template #default="{ row }">
-            <span class="price">¥{{ row.unit_price?.toFixed(2) || '0.00' }}</span>
+            <span class="price">¥{{ formatPrice(row.unit_price) }}</span>
           </template>
         </el-table-column>
         <el-table-column prop="quantity" label="数量" width="80" align="center" />
         <el-table-column label="小计" min-width="100">
           <template #default="{ row }">
-            <span class="price total">¥{{ ((row.unit_price || 0) * (row.quantity || 0)).toFixed(2) }}</span>
+            <span class="price total">¥{{ calcSubtotal(row.unit_price, row.quantity) }}</span>
           </template>
         </el-table-column>
         <el-table-column label="状态" width="100">
@@ -269,8 +269,8 @@ const currentPart = ref<Part | null>(null)
 
 const totalCost = computed(() => {
   return props.parts.reduce((sum, part) => {
-    const price = part.unit_price || 0
-    const quantity = part.quantity || 0
+    const price = Number(part.unit_price) || 0
+    const quantity = Number(part.quantity) || 0
     return sum + price * quantity
   }, 0)
 })
@@ -316,6 +316,17 @@ function formatDate(date: Date | null | string): string {
   return d.toLocaleDateString('zh-CN')
 }
 
+function formatPrice(value: any): string {
+  const num = Number(value) || 0
+  return num.toFixed(2)
+}
+
+function calcSubtotal(unitPrice: any, quantity: any): string {
+  const price = Number(unitPrice) || 0
+  const qty = Number(quantity) || 0
+  return (price * qty).toFixed(2)
+}
+
 function resetForm() {
   formData.name = ''
   formData.part_number = ''
@@ -341,8 +352,8 @@ function handleEdit(row: Part) {
   formData.name = row.name
   formData.part_number = row.part_number || ''
   formData.source = row.source || ''
-  formData.unit_price = row.unit_price || 0
-  formData.quantity = row.quantity || 1
+  formData.unit_price = Number(row.unit_price) || 0
+  formData.quantity = Number(row.quantity) || 1
   formData.is_original = row.is_original
   formData.order_date = row.order_date ? new Date(row.order_date).toISOString().split('T')[0] : ''
   formData.arrival_date = row.arrival_date ? new Date(row.arrival_date).toISOString().split('T')[0] : ''

@@ -28,7 +28,7 @@ export const repairLogsApi = {
   },
 
   update(id: number, data: UpdateRepairLogDto): Promise<RepairLog> {
-    return request.put<RepairLog>(`/repair-logs/${id}`, data)
+    return request.patch<RepairLog>(`/repair-logs/${id}`, data)
   },
 
   remove(id: number): Promise<void> {
