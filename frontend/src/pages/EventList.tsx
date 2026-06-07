@@ -6,7 +6,7 @@ import dayjs from 'dayjs'
 import { eventApi } from '../services/api'
 import type { Event } from '../types'
 
-const statusMap: Record<string, { text: string; color: string } = {
+const statusMap: Record<string, { text: string; color: string }> = {
   pending: { text: '报名中', color: 'blue' },
   ongoing: { text: '进行中', color: 'green' },
   completed: { text: '已结束', color: 'default' },

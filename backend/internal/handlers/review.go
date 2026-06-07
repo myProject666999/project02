@@ -7,12 +7,13 @@ import (
 	"strconv"
 	"time"
 
-	"github.com/gin-gonic/gin"
-	"github.com/google/uuid"
 	"motorcycle-team/internal/config"
 	"motorcycle-team/internal/models"
 	"motorcycle-team/internal/utils"
 	"motorcycle-team/pkg/gpx"
+
+	"github.com/gin-gonic/gin"
+	"github.com/google/uuid"
 )
 
 type CreateReviewRequest struct {
@@ -153,10 +154,10 @@ func EventReviews(c *gin.Context) {
 	}
 
 	utils.Success(c, gin.H{
-		"total_reviews":   len(reviews),
-		"total_distance":  totalDistance,
-		"max_speed":       maxSpeed,
-		"reviews":         reviews,
+		"total_reviews":  len(reviews),
+		"total_distance": totalDistance,
+		"max_speed":      maxSpeed,
+		"reviews":        reviews,
 	})
 }
 
@@ -276,7 +277,9 @@ func UploadTrack(c *gin.Context) {
 		body, _ := io.ReadAll(c.Request.Body)
 		var points []TrackPointUpload
 		if json.Unmarshal(body, &points) == nil && len(points) > 0 {
-			return saveTrackPoints(reviewID, review.EventID, userID, points)
+			saveTrackPoints(reviewID, review.EventID, userID, points)
+			utils.Success(c, nil)
+			return
 		}
 		utils.BadRequest(c, "请选择GPX文件或上传轨迹点数据")
 		return
