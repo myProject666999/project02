@@ -227,8 +227,9 @@ func UploadMedia(c *gin.Context) {
 		}
 	}
 	if capturedAtStr != "" {
-		if t, err := time.Parse(time.RFC3339, capturedAtStr); err == nil {
-			capturedAt = &t
+		var dt utils.DateTime
+		if err := json.Unmarshal([]byte(`"`+capturedAtStr+`"`), &dt); err == nil {
+			capturedAt = &dt.Time
 		}
 	}
 
@@ -351,8 +352,8 @@ func UploadTrack(c *gin.Context) {
 func saveTrackPoints(reviewID, eventID, userID uint64, points []TrackPointUpload) {
 	var trackPoints []models.TrackPoint
 	for _, p := range points {
-		t, err := time.Parse(time.RFC3339, p.Time)
-		if err != nil {
+		var dt utils.DateTime
+		if err := json.Unmarshal([]byte(`"`+p.Time+`"`), &dt); err != nil {
 			continue
 		}
 		tp := models.TrackPoint{
@@ -363,7 +364,7 @@ func saveTrackPoints(reviewID, eventID, userID uint64, points []TrackPointUpload
 			Lng:        p.Lng,
 			Elevation:  p.Elevation,
 			Speed:      p.Speed,
-			RecordedAt: t,
+			RecordedAt: dt.Time,
 		}
 		trackPoints = append(trackPoints, tp)
 	}

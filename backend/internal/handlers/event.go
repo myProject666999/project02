@@ -3,7 +3,6 @@ package handlers
 import (
 	"path/filepath"
 	"strconv"
-	"time"
 
 	"github.com/gin-gonic/gin"
 	"github.com/google/uuid"
@@ -14,38 +13,38 @@ import (
 )
 
 type CreateEventRequest struct {
-	Title              string    `json:"title" binding:"required,max=200"`
-	Description        string    `json:"description"`
-	StartPoint         string    `json:"start_point" binding:"required"`
-	StartLat           float64   `json:"start_lat"`
-	StartLng           float64   `json:"start_lng"`
-	EndPoint           string    `json:"end_point" binding:"required"`
-	EndLat             float64   `json:"end_lat"`
-	EndLng             float64   `json:"end_lng"`
-	MeetTime           time.Time `json:"meet_time" binding:"required"`
-	RouteDescription   string    `json:"route_description"`
-	MinDisplacement    int       `json:"min_displacement"`
-	RequireLicenseLevel string   `json:"require_license_level"`
-	MaxParticipants    int       `json:"max_participants"`
-	CheckinRadius      int       `json:"checkin_radius"`
+	Title              string       `json:"title" binding:"required,max=200"`
+	Description        string       `json:"description"`
+	StartPoint         string       `json:"start_point" binding:"required"`
+	StartLat           float64      `json:"start_lat"`
+	StartLng           float64      `json:"start_lng"`
+	EndPoint           string       `json:"end_point" binding:"required"`
+	EndLat             float64      `json:"end_lat"`
+	EndLng             float64      `json:"end_lng"`
+	MeetTime           utils.DateTime `json:"meet_time" binding:"required"`
+	RouteDescription   string       `json:"route_description"`
+	MinDisplacement    int          `json:"min_displacement"`
+	RequireLicenseLevel string      `json:"require_license_level"`
+	MaxParticipants    int          `json:"max_participants"`
+	CheckinRadius      int          `json:"checkin_radius"`
 }
 
 type UpdateEventRequest struct {
-	Title              string    `json:"title"`
-	Description        string    `json:"description"`
-	StartPoint         string    `json:"start_point"`
-	StartLat           float64   `json:"start_lat"`
-	StartLng           float64   `json:"start_lng"`
-	EndPoint           string    `json:"end_point"`
-	EndLat             float64   `json:"end_lat"`
-	EndLng             float64   `json:"end_lng"`
-	MeetTime           time.Time `json:"meet_time"`
-	RouteDescription   string    `json:"route_description"`
-	MinDisplacement    int       `json:"min_displacement"`
-	RequireLicenseLevel string   `json:"require_license_level"`
-	MaxParticipants    int       `json:"max_participants"`
-	CheckinRadius      int       `json:"checkin_radius"`
-	Status             string    `json:"status"`
+	Title              string       `json:"title"`
+	Description        string       `json:"description"`
+	StartPoint         string       `json:"start_point"`
+	StartLat           float64      `json:"start_lat"`
+	StartLng           float64      `json:"start_lng"`
+	EndPoint           string       `json:"end_point"`
+	EndLat             float64      `json:"end_lat"`
+	EndLng             float64      `json:"end_lng"`
+	MeetTime           utils.DateTime `json:"meet_time"`
+	RouteDescription   string       `json:"route_description"`
+	MinDisplacement    int          `json:"min_displacement"`
+	RequireLicenseLevel string      `json:"require_license_level"`
+	MaxParticipants    int          `json:"max_participants"`
+	CheckinRadius      int          `json:"checkin_radius"`
+	Status             string       `json:"status"`
 }
 
 func CreateEvent(c *gin.Context) {
@@ -67,7 +66,7 @@ func CreateEvent(c *gin.Context) {
 		EndPoint:           req.EndPoint,
 		EndLat:             req.EndLat,
 		EndLng:             req.EndLng,
-		MeetTime:           req.MeetTime,
+		MeetTime:           req.MeetTime.Time,
 		RouteDescription:   req.RouteDescription,
 		MinDisplacement:    req.MinDisplacement,
 		RequireLicenseLevel: req.RequireLicenseLevel,
@@ -193,8 +192,8 @@ func UpdateEvent(c *gin.Context) {
 	if req.EndLng != 0 {
 		updates["end_lng"] = req.EndLng
 	}
-	if !req.MeetTime.IsZero() {
-		updates["meet_time"] = req.MeetTime
+	if !req.MeetTime.Time.IsZero() {
+		updates["meet_time"] = req.MeetTime.Time
 	}
 	if req.RouteDescription != "" {
 		updates["route_description"] = req.RouteDescription
