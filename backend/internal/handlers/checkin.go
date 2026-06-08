@@ -94,7 +94,7 @@ func EventCheckins(c *gin.Context) {
 		return
 	}
 
-	var checkins []models.Checkin
+	checkins := make([]models.Checkin, 0)
 	if err := config.DB.Preload("User").
 		Where("event_id = ?", eventID).Order("checkin_time DESC").Find(&checkins).Error; err != nil {
 		utils.InternalServerError(c, "查询失败")

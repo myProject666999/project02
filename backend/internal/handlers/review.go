@@ -103,10 +103,10 @@ func GetReview(c *gin.Context) {
 		return
 	}
 
-	var media []models.Media
+	media := make([]models.Media, 0)
 	config.DB.Where("review_id = ?", id).Find(&media)
 
-	var trackPoints []models.TrackPoint
+	trackPoints := make([]models.TrackPoint, 0)
 	config.DB.Where("review_id = ?", id).Order("recorded_at ASC").Find(&trackPoints)
 
 	utils.Success(c, gin.H{
@@ -119,7 +119,7 @@ func GetReview(c *gin.Context) {
 func MyReviews(c *gin.Context) {
 	userID := c.GetUint64("userID")
 
-	var reviews []models.Review
+	reviews := make([]models.Review, 0)
 	if err := config.DB.Preload("User").
 		Where("user_id = ?", userID).Order("created_at DESC").Find(&reviews).Error; err != nil {
 		utils.InternalServerError(c, "查询失败")
@@ -137,7 +137,7 @@ func EventReviews(c *gin.Context) {
 		return
 	}
 
-	var reviews []models.Review
+	reviews := make([]models.Review, 0)
 	if err := config.DB.Preload("User").
 		Where("event_id = ?", eventID).Order("created_at DESC").Find(&reviews).Error; err != nil {
 		utils.InternalServerError(c, "查询失败")

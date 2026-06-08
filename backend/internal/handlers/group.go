@@ -168,12 +168,12 @@ func GetEventGroups(c *gin.Context) {
 		return
 	}
 
-	var results []GroupResult
+	results := make([]GroupResult, 0)
 	for _, group := range groups {
 		var members []models.GroupMember
 		config.DB.Preload("User").Where("group_id = ?", group.ID).Find(&members)
 
-		var memberUsers []models.User
+		memberUsers := make([]models.User, 0)
 		for _, m := range members {
 			if m.User != nil {
 				memberUsers = append(memberUsers, *m.User)

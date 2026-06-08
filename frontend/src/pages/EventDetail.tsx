@@ -299,9 +299,9 @@ const EventDetail = () => {
                   </p>
                 )}
                 <div>
-                  <b>成员 ({group.members.length}人)：</b>
+                  <b>成员 ({group.members?.length || 0}人)：</b>
                   <div style={{ marginTop: '8px' }}>
-                    {group.members.map((m) => (
+                    {(group.members || []).map((m) => (
                       <Tag key={m.id} style={{ marginBottom: '4px' }}>
                         <Avatar size="small" icon={<UserOutlined />} style={{ marginRight: '4px' }} />
                         {m.nickname || m.username}

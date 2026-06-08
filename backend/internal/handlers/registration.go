@@ -140,7 +140,7 @@ func CreateRegistration(c *gin.Context) {
 func MyRegistrations(c *gin.Context) {
 	userID := c.GetUint64("userID")
 
-	var regs []models.Registration
+	regs := make([]models.Registration, 0)
 	if err := config.DB.Preload("Event").Preload("Event.Creator").
 		Where("user_id = ?", userID).Order("created_at DESC").Find(&regs).Error; err != nil {
 		utils.InternalServerError(c, "查询失败")
@@ -170,7 +170,7 @@ func EventRegistrations(c *gin.Context) {
 		return
 	}
 
-	var regs []models.Registration
+	regs := make([]models.Registration, 0)
 	if err := config.DB.Preload("User").
 		Where("event_id = ?", eventID).Order("created_at DESC").Find(&regs).Error; err != nil {
 		utils.InternalServerError(c, "查询失败")

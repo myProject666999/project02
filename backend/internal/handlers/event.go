@@ -126,7 +126,7 @@ func ListEvents(c *gin.Context) {
 	var total int64
 	query.Count(&total)
 
-	var events []models.Event
+	events := make([]models.Event, 0)
 	offset := (page - 1) * pageSize
 	if err := query.Offset(offset).Limit(pageSize).Order("meet_time DESC").Find(&events).Error; err != nil {
 		utils.InternalServerError(c, "查询失败")
