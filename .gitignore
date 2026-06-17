@@ -49,6 +49,8 @@ data/ad/uploads/*
 # Frontend
 node_modules/
 dist/
+.angular
+package-lock.json
 
 # Build cache
 **/.cache/
@@ -88,7 +90,6 @@ Thumbs.db
 
 # Git
 *.log
-package-lock.json
 init-*.bat
 
 
