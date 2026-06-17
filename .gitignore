@@ -52,6 +52,7 @@ dist/
 
 # Build cache
 **/.cache/
+mysql_data/
 
 # IDEA artifacts and output dirs
 *.iml
